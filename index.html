@@ -6,7 +6,7 @@
 <title>Moamen Osama — Backend .NET Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#07090c;
@@ -21,6 +21,31 @@
     --display:'Space Grotesk', sans-serif;
     --body:'Inter', sans-serif;
   }
+
+  [data-theme="light"]{
+    --bg:#f6efe4;
+    --panel:#ffffff;
+    --panel-2:#f0e2cd;
+    --line:#e2cfb4;
+    --text:#3a2a1a;
+    --muted:#8a7258;
+    --amber:#b5651d;
+    --indigo:#7a4a24;
+  }
+  [data-theme="light"] .bg-anim span{opacity:0.10;}
+  [data-theme="light"] .bg-net span{opacity:0.06;}
+  [data-theme="light"] .hero-photo img{filter:none;}
+  [data-theme="light"] .code-card .cc-dot.r{background:#e05a4e;}
+  [data-theme="light"] .code-card .cc-dot.y{background:#e0a83e;}
+  [data-theme="light"] .code-card .cc-dot.g{background:#3fae5a;}
+
+  body[dir="rtl"]{font-family:'Tajawal', var(--body);}
+  body[dir="rtl"] h1, body[dir="rtl"] h2, body[dir="rtl"] h3,
+  body[dir="rtl"] .logo, body[dir="rtl"] .role-line, body[dir="rtl"] .big-name,
+  body[dir="rtl"] .status-badge, body[dir="rtl"] .btn, body[dir="rtl"] .section-label,
+  body[dir="rtl"] .n-title, body[dir="rtl"] .n-label{font-family:'Tajawal', var(--display);}
+  body[dir="rtl"] .navlinks{direction:rtl;}
+
 
   /* ---------- ANIMATED BACKGROUND ---------- */
   .bg-anim{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;}
@@ -272,6 +297,36 @@
   section.contact p{color:var(--muted);max-width:460px;margin:14px auto 34px;}
   .contact-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
   footer{padding:26px 0 50px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:12px;}
+
+  /* ---------- NAV ACTIONS (theme/lang) ---------- */
+  nav .wrap{flex-wrap:wrap;}
+  .nav-actions{display:flex;gap:10px;align-items:center;}
+  .icon-btn{
+    background:var(--panel);border:1px solid var(--line);color:var(--text);
+    height:40px;min-width:40px;padding:0 12px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;font-family:var(--mono);font-size:13px;transition:all .2s ease;
+  }
+  .icon-btn:hover{border-color:var(--indigo);}
+
+  /* ---------- EXPERIENCE ---------- */
+  section.experience{padding:80px 0;border-top:1px solid var(--line);}
+  .exp-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px;
+    display:flex;gap:18px;align-items:flex-start;max-width:640px;
+  }
+  .exp-icon{
+    width:44px;height:44px;border-radius:10px;background:var(--panel-2);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;
+  }
+  .exp-title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+  .exp-card h3{font-family:var(--display);font-size:18px;font-weight:600;}
+  .exp-org{color:var(--indigo);font-size:13.5px;margin-top:2px;}
+  .exp-date{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:var(--panel-2);border:1px solid var(--line);padding:5px 10px;border-radius:999px;white-space:nowrap;}
+  .exp-badge{
+    display:inline-block;margin-top:10px;font-family:var(--mono);font-size:11px;color:var(--indigo);
+    border:1px solid var(--indigo);padding:3px 10px;border-radius:999px;
+  }
+  .exp-bullet{color:var(--muted);font-size:14px;margin-top:14px;}
 </style>
 </head>
 <body>
@@ -282,36 +337,41 @@
   <div class="wrap">
     <div class="logo">moamen<span>.dev</span></div>
     <div class="navlinks">
-      <a href="#pipeline">Architecture</a>
-      <a href="#about">About</a>
-      <a href="#skills">Stack</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
+      <a href="#pipeline" data-i18n="nav_arch">Architecture</a>
+      <a href="#about" data-i18n="nav_about">About</a>
+      <a href="#skills" data-i18n="nav_skills">Stack</a>
+      <a href="#experience" data-i18n="nav_exp">Experience</a>
+      <a href="#projects" data-i18n="nav_projects">Projects</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" type="button">☀️</button>
+      <button class="icon-btn" id="langToggle" aria-label="Toggle language" type="button">عربي</button>
     </div>
   </div>
 </nav>
 
 <header class="hero">
   <div class="wrap">
-    <div class="status-badge"><span class="dot"></span> Open to opportunities</div>
+    <div class="status-badge"><span class="dot"></span> <span data-i18n="hero_badge">Open to opportunities</span></div>
 
     <div class="hero-grid">
       <div>
-        <div class="greet">Hi, I'm</div>
+        <div class="greet" data-i18n="hero_greet">Hi, I'm</div>
         <h1 class="big-name">Moamen<br>Osama</h1>
-        <div class="role-line">.NET Developer</div>
-        <p class="subtitle">Building scalable backends &amp; clean architectures with ASP.NET Core, EF Core, and Redis.</p>
+        <div class="role-line" data-i18n="hero_role">.NET Developer</div>
+        <p class="subtitle" data-i18n="hero_subtitle">Building scalable backends &amp; clean architectures with ASP.NET Core, EF Core, and Redis.</p>
 
         <div class="stats-row">
-          <div class="stat-item"><div class="num">4+</div><div class="lbl">Years Experience</div></div>
-          <div class="stat-item"><div class="num">50+</div><div class="lbl">Projects Built</div></div>
-          <div class="stat-item"><div class="num">.NET</div><div class="lbl">Core Specialty</div></div>
+          <div class="stat-item"><div class="num">4+</div><div class="lbl" data-i18n="stat_years">Years Experience</div></div>
+          <div class="stat-item"><div class="num">50+</div><div class="lbl" data-i18n="stat_projects">Projects Built</div></div>
+          <div class="stat-item"><div class="num">.NET</div><div class="lbl" data-i18n="stat_core">Core Specialty</div></div>
         </div>
 
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#projects">View Projects</a>
-          <a class="btn btn-ghost" href="https://wa.me/201033199897" target="_blank" rel="noopener">Contact Me</a>
-          <a class="btn btn-dark" href="YOUR_CV_LINK">📄 Download CV</a>
+          <a class="btn btn-primary" href="#projects" data-i18n="btn_view_projects">View Projects</a>
+          <a class="btn btn-ghost" href="https://wa.me/201033199897" target="_blank" rel="noopener" data-i18n="btn_contact_me">Contact Me</a>
+          <a class="btn btn-dark" href="YOUR_CV_LINK" data-i18n="btn_download_cv">📄 Download CV</a>
         </div>
 
         <div class="social-row">
@@ -356,18 +416,18 @@
 
 <section class="pipeline" id="pipeline">
   <div class="wrap">
-    <div class="section-label">how a request moves through my code</div>
-    <h2>Request Pipeline</h2>
-    <p class="pipeline-note">The layered structure I default to on every API — clear boundaries, single-responsibility layers, and a cache in the loop where it earns its place.</p>
+    <div class="section-label" data-i18n="pipeline_label">how a request moves through my code</div>
+    <h2 data-i18n="pipeline_h2">Request Pipeline</h2>
+    <p class="pipeline-note" data-i18n="pipeline_note">The layered structure I default to on every API — clear boundaries, single-responsibility layers, and a cache in the loop where it earns its place.</p>
 
     <div class="flow">
-      <div class="node"><div class="n-label">01 · entry</div><div class="n-title">Controller</div></div>
+      <div class="node"><div class="n-label" data-i18n="node_entry">01 · entry</div><div class="n-title">Controller</div></div>
       <div class="arrow"><div class="dot"></div>—</div>
-      <div class="node"><div class="n-label">02 · logic</div><div class="n-title">Service</div></div>
+      <div class="node"><div class="n-label" data-i18n="node_logic">02 · logic</div><div class="n-title">Service</div></div>
       <div class="arrow"><div class="dot" style="animation-delay:.6s"></div>—</div>
-      <div class="node"><div class="n-label">03 · access</div><div class="n-title">Repository</div></div>
+      <div class="node"><div class="n-label" data-i18n="node_access">03 · access</div><div class="n-title">Repository</div></div>
       <div class="arrow"><div class="dot" style="animation-delay:1.2s"></div>—</div>
-      <div class="node"><div class="n-label">04 · store</div><div class="n-title">Database</div></div>
+      <div class="node"><div class="n-label" data-i18n="node_store">04 · store</div><div class="n-title">Database</div></div>
     </div>
     <div style="display:flex;justify-content:center;margin-top:6px;">
       <div class="cache-branch">
@@ -385,15 +445,15 @@
   <div class="wrap">
     <div class="about-grid">
       <div>
-        <div class="section-label">about</div>
-        <h2>Backend-first, full-stack when it counts</h2>
-        <p>I work primarily in ASP.NET Core, building APIs around Clean Architecture — Specification pattern, Generic Repository, Unit of Work — with EF Core and SQL Server underneath. Lately I've been deepening Redis-based caching for high-traffic endpoints like cart/basket flows.</p>
-        <p>On the frontend I use React when a project needs a full-stack hand, so I can ship a feature end-to-end without waiting on a handoff.</p>
+        <div class="section-label" data-i18n="about_label">about</div>
+        <h2 data-i18n="about_h2">Backend-first, full-stack when it counts</h2>
+        <p data-i18n="about_p1">I work primarily in ASP.NET Core, building APIs around Clean Architecture — Specification pattern, Generic Repository, Unit of Work — with EF Core and SQL Server underneath. Lately I've been deepening Redis-based caching for high-traffic endpoints like cart/basket flows.</p>
+        <p data-i18n="about_p2">On the frontend I use React when a project needs a full-stack hand, so I can ship a feature end-to-end without waiting on a handoff.</p>
       </div>
       <div class="stat-grid">
-        <div class="stat"><div class="num">4+</div><div class="lbl">years experience</div></div>
-        <div class="stat"><div class="num">50+</div><div class="lbl">projects completed</div></div>
-        <div class="stat"><div class="num">.NET</div><div class="lbl">core specialty</div></div>
+        <div class="stat"><div class="num">4+</div><div class="lbl" data-i18n="about_stat1">years experience</div></div>
+        <div class="stat"><div class="num">50+</div><div class="lbl" data-i18n="about_stat2">projects completed</div></div>
+        <div class="stat"><div class="num">.NET</div><div class="lbl" data-i18n="about_stat3">core specialty</div></div>
         <div class="stat"><div class="num">EF/Redis</div><div class="lbl">data & caching</div></div>
       </div>
     </div>
@@ -402,11 +462,11 @@
 
 <section class="skills" id="skills">
   <div class="wrap">
-    <div class="section-label">stack</div>
-    <h2>Tools I reach for</h2>
+    <div class="section-label" data-i18n="skills_label">stack</div>
+    <h2 data-i18n="skills_h2">Tools I reach for</h2>
     <div class="skill-cols">
       <div class="skill-col">
-        <h3>Backend</h3>
+        <h3 data-i18n="col_backend">Backend</h3>
         <ul>
           <li>C# / .NET</li>
           <li>ASP.NET Core Web API</li>
@@ -415,7 +475,7 @@
         </ul>
       </div>
       <div class="skill-col">
-        <h3>Data</h3>
+        <h3 data-i18n="col_data">Data</h3>
         <ul>
           <li>Entity Framework Core</li>
           <li>SQL Server</li>
@@ -424,7 +484,7 @@
         </ul>
       </div>
       <div class="skill-col">
-        <h3>Frontend</h3>
+        <h3 data-i18n="col_frontend">Frontend</h3>
         <ul>
           <li>React</li>
           <li>JavaScript</li>
@@ -433,7 +493,7 @@
         </ul>
       </div>
       <div class="skill-col">
-        <h3>Tools</h3>
+        <h3 data-i18n="col_tools">Tools</h3>
         <ul>
           <li>Git & GitHub</li>
           <li>Postman</li>
@@ -445,31 +505,52 @@
   </div>
 </section>
 
+<section class="experience" id="experience">
+  <div class="wrap">
+    <div class="section-label" data-i18n="exp_label">experience</div>
+    <h2 data-i18n="exp_h2">Experience &amp; Training</h2>
+    <div class="exp-card">
+      <div class="exp-icon">🎓</div>
+      <div>
+        <div class="exp-title-row">
+          <div>
+            <h3 data-i18n="exp_title">ASP.NET Core Diploma</h3>
+            <div class="exp-org">Route Academy</div>
+          </div>
+          <div class="exp-date">Apr 2024 – Aug 2024</div>
+        </div>
+        <div class="exp-badge" data-i18n="exp_badge">Training</div>
+        <p class="exp-bullet" data-i18n="exp_bullet">600+ hours covering C# Fundamentals, OOP, SOLID Principles, Design Patterns, LINQ.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="projects" id="projects">
   <div class="wrap">
-    <div class="section-label">selected work</div>
-    <h2>Projects</h2>
+    <div class="section-label" data-i18n="projects_label">selected work</div>
+    <h2 data-i18n="projects_h2">Projects</h2>
     <div class="proj-grid">
       <div class="card">
-        <div class="tag">E-Commerce · Clean Architecture</div>
-        <h3>E-Commerce</h3>
-        <p>ASP.NET Core e-commerce backend built on Clean Architecture, with a Redis-backed basket/cart layer for fast read/write on cart operations.</p>
+        <div class="tag" data-i18n="p1_tag">E-Commerce · Clean Architecture</div>
+        <h3 data-i18n="p1_title">E-Commerce</h3>
+        <p data-i18n="p1_desc">ASP.NET Core e-commerce backend built on Clean Architecture, with a Redis-backed basket/cart layer for fast read/write on cart operations.</p>
         <div class="stack"><span>.NET</span><span>Redis</span><span>EF Core</span><span>Specification Pattern</span></div>
-        <div style="margin-top:16px;"><a class="btn btn-ghost" style="padding:9px 16px;font-size:12.5px;" href="https://github.com/MoamenOsama10/E-Commerce" target="_blank" rel="noopener">View on GitHub →</a></div>
+        <div style="margin-top:16px;"><a class="btn btn-ghost" style="padding:9px 16px;font-size:12.5px;" href="https://github.com/MoamenOsama10/E-Commerce" target="_blank" rel="noopener"><span data-i18n="view_github_btn">View on GitHub →</span></a></div>
       </div>
       <div class="card">
-        <div class="tag">LMS · Full-Stack</div>
+        <div class="tag" data-i18n="p2_tag">LMS · Full-Stack</div>
         <h3>LearnHub</h3>
-        <p>A learning management system with ASP.NET Core 8 API, React frontend, and a Flutter mobile client, secured with JWT authentication.</p>
+        <p data-i18n="p2_desc">A learning management system with ASP.NET Core 8 API, React frontend, and a Flutter mobile client, secured with JWT authentication.</p>
         <div class="stack"><span>.NET 8</span><span>React</span><span>Flutter</span><span>JWT</span></div>
-        <div style="margin-top:16px;"><a class="btn btn-ghost" style="padding:9px 16px;font-size:12.5px;" href="https://github.com/MoamenOsama10/LearnHub" target="_blank" rel="noopener">View on GitHub →</a></div>
+        <div style="margin-top:16px;"><a class="btn btn-ghost" style="padding:9px 16px;font-size:12.5px;" href="https://github.com/MoamenOsama10/LearnHub" target="_blank" rel="noopener"><span data-i18n="view_github_btn">View on GitHub →</span></a></div>
       </div>
       <div class="card">
-        <div class="tag">Project</div>
+        <div class="tag" data-i18n="p3_tag">Project</div>
         <h3>Fyvie</h3>
-        <p>A .NET project focused on solid, maintainable backend design.</p>
+        <p data-i18n="p3_desc">A .NET project focused on solid, maintainable backend design.</p>
         <div class="stack"><span>.NET</span></div>
-        <div style="margin-top:16px;"><a class="btn btn-ghost" style="padding:9px 16px;font-size:12.5px;" href="https://github.com/MoamenOsama10/Fyvie" target="_blank" rel="noopener">View on GitHub →</a></div>
+        <div style="margin-top:16px;"><a class="btn btn-ghost" style="padding:9px 16px;font-size:12.5px;" href="https://github.com/MoamenOsama10/Fyvie" target="_blank" rel="noopener"><span data-i18n="view_github_btn">View on GitHub →</span></a></div>
       </div>
     </div>
   </div>
@@ -477,22 +558,131 @@
 
 <section class="contact" id="contact">
   <div class="wrap">
-    <div class="section-label" style="justify-content:center;display:flex;">get in touch</div>
-    <h2>Let's build something solid</h2>
-    <p>Open to backend and full-stack .NET roles, freelance work, or just talking architecture.</p>
+    <div class="section-label" style="justify-content:center;display:flex;" data-i18n="contact_label">get in touch</div>
+    <h2 data-i18n="contact_h2">Let's build something solid</h2>
+    <p data-i18n="contact_p">Open to backend and full-stack .NET roles, freelance work, or just talking architecture.</p>
     <div class="contact-links">
       <a class="btn btn-ghost" href="https://www.linkedin.com/in/momanosama10" target="_blank" rel="noopener">LinkedIn</a>
       <a class="btn btn-ghost" href="https://github.com/MoamenOsama10" target="_blank" rel="noopener">GitHub</a>
-      <a class="btn btn-primary" href="mailto:momenosama985@gmail.com">Email Me</a>
+      <a class="btn btn-primary" href="mailto:momenosama985@gmail.com" data-i18n="email_me_btn">Email Me</a>
     </div>
     <div class="meta-row" style="justify-content:center;margin-top:40px;">
-      <div>🇪🇬 <b>Arabic</b> — Native</div>
-      <div>🇬🇧 <b>English</b> — Fluent</div>
+      <div>🇪🇬 <b data-i18n="lang_ar_word">Arabic</b> — <span data-i18n="lang_native">Native</span></div>
+      <div>🇬🇧 <b data-i18n="lang_en_word">English</b> — <span data-i18n="lang_fluent">Fluent</span></div>
     </div>
   </div>
 </section>
 
-<footer>© 2026 Moamen Osama — built with .NET on the brain</footer>
+<footer data-i18n="footer_text">© 2026 Moamen Osama — built with .NET on the brain</footer>
+
+<script>
+const translations = {
+  en: {
+    nav_arch:"Architecture", nav_about:"About", nav_skills:"Stack", nav_exp:"Experience", nav_projects:"Projects", nav_contact:"Contact",
+    hero_badge:"Open to opportunities", hero_greet:"Hi, I'm", hero_role:".NET Developer",
+    hero_subtitle:"Building scalable backends & clean architectures with ASP.NET Core, EF Core, and Redis.",
+    stat_years:"Years Experience", stat_projects:"Projects Built", stat_core:"Core Specialty",
+    btn_view_projects:"View Projects", btn_contact_me:"Contact Me", btn_download_cv:"📄 Download CV",
+    pipeline_label:"how a request moves through my code", pipeline_h2:"Request Pipeline",
+    pipeline_note:"The layered structure I default to on every API — clear boundaries, single-responsibility layers, and a cache in the loop where it earns its place.",
+    node_entry:"01 · entry", node_logic:"02 · logic", node_access:"03 · access", node_store:"04 · store",
+    about_label:"about", about_h2:"Backend-first, full-stack when it counts",
+    about_p1:"I work primarily in ASP.NET Core, building APIs around Clean Architecture — Specification pattern, Generic Repository, Unit of Work — with EF Core and SQL Server underneath. Lately I've been deepening Redis-based caching for high-traffic endpoints like cart/basket flows.",
+    about_p2:"On the frontend I use React when a project needs a full-stack hand, so I can ship a feature end-to-end without waiting on a handoff.",
+    about_stat1:"years experience", about_stat2:"projects completed", about_stat3:"core specialty", about_stat4:"data & caching",
+    skills_label:"stack", skills_h2:"Tools I reach for",
+    col_backend:"Backend", col_data:"Data", col_frontend:"Frontend", col_tools:"Tools",
+    exp_label:"experience", exp_h2:"Experience & Training", exp_title:"ASP.NET Core Diploma", exp_badge:"Training",
+    exp_bullet:"600+ hours covering C# Fundamentals, OOP, SOLID Principles, Design Patterns, LINQ.",
+    projects_label:"selected work", projects_h2:"Projects",
+    p1_tag:"E-Commerce · Clean Architecture", p1_title:"E-Commerce",
+    p1_desc:"ASP.NET Core e-commerce backend built on Clean Architecture, with a Redis-backed basket/cart layer for fast read/write on cart operations.",
+    p2_tag:"LMS · Full-Stack",
+    p2_desc:"A learning management system with ASP.NET Core 8 API, React frontend, and a Flutter mobile client, secured with JWT authentication.",
+    p3_tag:"Project",
+    p3_desc:"A .NET project focused on solid, maintainable backend design.",
+    view_github_btn:"View on GitHub →",
+    contact_label:"get in touch", contact_h2:"Let's build something solid",
+    contact_p:"Open to backend and full-stack .NET roles, freelance work, or just talking architecture.",
+    email_me_btn:"Email Me",
+    lang_ar_word:"Arabic", lang_native:"Native", lang_en_word:"English", lang_fluent:"Fluent",
+    footer_text:"© 2026 Moamen Osama — built with .NET on the brain",
+    lang_btn_label:"عربي"
+  },
+  ar: {
+    nav_arch:"المعمارية", nav_about:"نبذة", nav_skills:"المهارات", nav_exp:"الخبرة", nav_projects:"المشاريع", nav_contact:"تواصل",
+    hero_badge:"متاح للفرص الوظيفية", hero_greet:"أهلاً، أنا", hero_role:"مطور .NET",
+    hero_subtitle:"بناء أنظمة خلفية قابلة للتوسع بمعمارية نظيفة باستخدام ASP.NET Core وEF Core وRedis.",
+    stat_years:"سنوات خبرة", stat_projects:"مشروع منجز", stat_core:"التخصص الأساسي",
+    btn_view_projects:"عرض المشاريع", btn_contact_me:"تواصل معي", btn_download_cv:"📄 تحميل السيرة الذاتية",
+    pipeline_label:"رحلة الطلب داخل الكود", pipeline_h2:"مسار الطلب",
+    pipeline_note:"الهيكل الطبقي اللي بعتمده في كل API — حدود واضحة بين الطبقات، مسؤولية واحدة لكل طبقة، وكاش يدخل بس لما يكون له داعي فعلي.",
+    node_entry:"01 · استقبال", node_logic:"02 · منطق", node_access:"03 · وصول", node_store:"04 · تخزين",
+    about_label:"نبذة عني", about_h2:"التركيز على الباك اند، وفل ستاك وقت الحاجة",
+    about_p1:"بشتغل بشكل أساسي على ASP.NET Core، وبنبني الـ APIs حوالين Clean Architecture — Specification Pattern، Generic Repository، Unit of Work — فوق EF Core وSQL Server. في الفترة الأخيرة بعمّق شغلي في الكاش عن طريق Redis للـ endpoints اللي عليها ضغط زي السلة/الكارت.",
+    about_p2:"في الفرونت اند بستخدم React لما المشروع محتاج يد فل ستاك، عشان أقدر أسلّم الفيتشر كامل من غير ما أستنى handoff.",
+    about_stat1:"سنوات خبرة", about_stat2:"مشروع مكتمل", about_stat3:"التخصص الأساسي", about_stat4:"البيانات والكاش",
+    skills_label:"المهارات", skills_h2:"الأدوات اللي بستخدمها",
+    col_backend:"باك اند", col_data:"بيانات", col_frontend:"فرونت اند", col_tools:"أدوات",
+    exp_label:"الخبرة", exp_h2:"الخبرة والتدريب", exp_title:"دبلومة ASP.NET Core", exp_badge:"تدريب",
+    exp_bullet:"أكتر من 600 ساعة تدريب غطت أساسيات C#، البرمجة الكائنية، مبادئ SOLID، أنماط التصميم، وLINQ.",
+    projects_label:"أبرز الأعمال", projects_h2:"المشاريع",
+    p1_tag:"متجر إلكتروني · Clean Architecture", p1_title:"متجر إلكتروني",
+    p1_desc:"باك اند لمتجر إلكتروني مبني على ASP.NET Core بمعمارية Clean Architecture، وفيه طبقة كاش بـ Redis للسلة عشان قراءة وكتابة أسرع.",
+    p2_tag:"نظام إدارة تعليمي · Full-Stack",
+    p2_desc:"نظام إدارة تعليمي (LMS) بواجهة API على ASP.NET Core 8، وواجهة React، وتطبيق موبايل بـ Flutter، ومؤمّن بـ JWT.",
+    p3_tag:"مشروع",
+    p3_desc:"مشروع .NET بيركّز على تصميم باك اند نظيف وقابل للصيانة.",
+    view_github_btn:"عرض على GitHub ←",
+    contact_label:"تواصل معايا", contact_h2:"يلا نبني حاجة متينة",
+    contact_p:"متاح لوظائف باك اند أو فل ستاك .NET، شغل فريلانس، أو حتى لو حابب تتكلم في المعمارية بس.",
+    email_me_btn:"راسلني",
+    lang_ar_word:"العربية", lang_native:"لغة أم", lang_en_word:"الإنجليزية", lang_fluent:"بطلاقة",
+    footer_text:"© 2026 مؤمن أسامة — اتبنى بعقل .NET",
+    lang_btn_label:"EN"
+  }
+};
+
+function applyLang(lang){
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key = el.getAttribute('data-i18n');
+    if(translations[lang][key] !== undefined){
+      el.textContent = translations[lang][key];
+    }
+  });
+  var langBtn = document.getElementById('langToggle');
+  if(langBtn){ langBtn.textContent = translations[lang].lang_btn_label; }
+  try{ localStorage.setItem('site-lang', lang); }catch(e){}
+}
+function toggleLang(){
+  var cur = document.documentElement.lang === 'ar' ? 'ar' : 'en';
+  applyLang(cur === 'ar' ? 'en' : 'ar');
+}
+
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  var themeBtn = document.getElementById('themeToggle');
+  if(themeBtn){ themeBtn.textContent = theme === 'light' ? '🌙' : '☀️'; }
+  try{ localStorage.setItem('site-theme', theme); }catch(e){}
+}
+function toggleTheme(){
+  var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  applyTheme(cur === 'light' ? 'dark' : 'light');
+}
+
+document.getElementById('langToggle').addEventListener('click', toggleLang);
+document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+var savedLang = 'en', savedTheme = 'dark';
+try{
+  savedLang = localStorage.getItem('site-lang') || 'en';
+  savedTheme = localStorage.getItem('site-theme') || 'dark';
+}catch(e){}
+applyLang(savedLang);
+applyTheme(savedTheme);
+</script>
 
 </body>
 </html>
