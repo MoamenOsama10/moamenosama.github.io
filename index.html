@@ -33,7 +33,7 @@
     --indigo:#7a4a24;
   }
   [data-theme="light"] .bg-anim span{opacity:0.10;}
-  [data-theme="light"] .bg-net span{opacity:0.06;}
+  [data-theme="light"] .bg-net span{opacity:0.08;color:#8a5a2b !important;}
   [data-theme="light"] .hero-photo img{filter:none;}
   [data-theme="light"] .code-card .cc-dot.r{background:#e05a4e;}
   [data-theme="light"] .code-card .cc-dot.y{background:#e0a83e;}
@@ -104,6 +104,43 @@
     font-family:var(--body);
     line-height:1.6;
     overflow-x:hidden;
+  }
+  body.is-loading{overflow:hidden;height:100vh;}
+
+  /* ---------- PRELOADER ---------- */
+  #preloader{
+    position:fixed;inset:0;z-index:999;
+    background:var(--bg);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #preloader.pl-hide{opacity:0;visibility:hidden;pointer-events:none;}
+  .pl-logo{
+    font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:2px;
+    color:var(--muted);text-transform:uppercase;margin-bottom:26px;
+    opacity:0;animation:plFadeIn .6s ease forwards .1s;
+  }
+  .pl-count{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(56px,11vw,110px);line-height:1;letter-spacing:-2px;
+    background:linear-gradient(100deg, var(--indigo) 15%, var(--amber) 85%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-variant-numeric:tabular-nums;
+    opacity:0;animation:plFadeIn .6s ease forwards .2s;
+  }
+  .pl-bar-track{
+    width:min(320px,60vw);height:2px;background:var(--line);
+    margin-top:30px;border-radius:2px;overflow:hidden;
+    opacity:0;animation:plFadeIn .6s ease forwards .3s;
+  }
+  .pl-bar-fill{
+    height:100%;width:0%;border-radius:2px;
+    background:linear-gradient(90deg, var(--indigo), var(--amber));
+    transition:width .25s ease-out;
+  }
+  @keyframes plFadeIn{to{opacity:1;}}
+  @media (prefers-reduced-motion: reduce){
+    .pl-logo,.pl-count,.pl-bar-track{animation:none;opacity:1;}
   }
   a{color:inherit;text-decoration:none;}
   .wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
@@ -329,9 +366,16 @@
   .exp-bullet{color:var(--muted);font-size:14px;margin-top:14px;}
 </style>
 </head>
-<body>
+<body class="is-loading">
+
+<div id="preloader">
+  <div class="pl-logo">moamen<span style="opacity:.55">.dev</span></div>
+  <div class="pl-count" id="plCount">0%</div>
+  <div class="pl-bar-track"><div class="pl-bar-fill" id="plBar"></div></div>
+</div>
+
 <div class="bg-anim"><span></span><span></span><span></span></div>
-<div class="bg-net"><span>.NET</span><span>.NET</span><span>.NET</span><span>.NET</span><span>.NET</span><span>.NET</span><span>.NET</span><span>.NET</span></div>
+<div class="bg-net"><span>.NET</span><span>Backend</span><span>.NET</span><span>Backend</span><span>.NET</span><span>Backend</span><span>.NET</span><span>Backend</span></div>
 
 <nav>
   <div class="wrap">
@@ -671,6 +715,46 @@ function toggleTheme(){
   var cur = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
   applyTheme(cur === 'light' ? 'dark' : 'light');
 }
+
+(function(){
+  var countEl = document.getElementById('plCount');
+  var barEl = document.getElementById('plBar');
+  var preloader = document.getElementById('preloader');
+  var body = document.body;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function finishLoading(){
+    preloader.classList.add('pl-hide');
+    body.classList.remove('is-loading');
+    setTimeout(function(){ preloader.remove(); }, 650);
+  }
+
+  if(reduceMotion){
+    countEl.textContent = '100%';
+    barEl.style.width = '100%';
+    finishLoading();
+    return;
+  }
+
+  var pct = 0;
+  function tick(){
+    var remaining = 100 - pct;
+    var step = Math.max(1, Math.round(remaining * 0.12));
+    pct = Math.min(100, pct + step);
+    countEl.textContent = pct + '%';
+    barEl.style.width = pct + '%';
+    if(pct < 100){
+      setTimeout(tick, 90 + Math.random() * 60);
+    } else {
+      setTimeout(finishLoading, 350);
+    }
+  }
+  setTimeout(tick, 200);
+
+  window.addEventListener('load', function(){
+    if(pct < 100){ pct = 92; }
+  });
+})();
 
 document.getElementById('langToggle').addEventListener('click', toggleLang);
 document.getElementById('themeToggle').addEventListener('click', toggleTheme);
